@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            color: #333;
+            /* Default text color */
+            transition: background-image 0.5s ease-in-out;
+            /* Smooth transition for background image */
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Semi-transparent white */
+            backdrop-filter: blur(10px);
+            /* Glassmorphism blur effect */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Subtle white border */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            /* Adjust as needed */
+            max-width: 550px;
+            /* Adjust as needed for the box size */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            padding: 12px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 25px;
+            font-size: 1.1em;
+            flex-grow: 1;
+            margin-right: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 123, 255, 0.7);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .weather-info {
+            margin-top: 25px;
+            color: #333;
+            /* Ensure text is visible on the blurred background */
+        }
+
+        .weather-info h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .weather-info p {
+            font-size: 1.3em;
+            margin: 8px 0;
+        }
+
+        .weather-info img {
+            width: 100px;
+            height: 100px;
+            margin-top: 15px;
+            filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.1));
+        }
+
+        .error-message {
+            color: #c0392b;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body style="background-image: url('{{ background_image }}');">
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="get">
+            <input type="text" name="city" placeholder="Enter city" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if weather %}
+        <div class="weather-info">
+            {% if weather.error %}
+            <p class="error-message">{{ weather.error }}</p>
+            {% else %}
+            <h2>{{ weather.city }}</h2>
+            <p>{{ weather.temperature }}°C</p>
+            <p>{{ weather.description }}</p>
+            <img src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather icon">
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
